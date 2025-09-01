@@ -21,7 +21,6 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private Button clearPhotoButton;
     private Location currentLocation;
     private String photoBase64 = null;
-    private final String apiUrl = "http://18.233.249.90:5000/reports/";
+    private final String apiUrl = "http://186.98.29.101:5000/reports/";
 
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
@@ -221,9 +220,6 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
         fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, new CancellationTokenSource().getToken())
                 .addOnSuccessListener(location -> {
                     if (location != null) {
@@ -343,21 +339,17 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                final String responseBody = response.body() != null ? response.body().string() : "";
                 runOnUiThread(() -> {
                     if (response.isSuccessful()) {
                         sendStatusTextView.setText("Reporte enviado exitosamente");
-                        // Opcional: Resetea campos después de envío
-                        currentLocation = null;
-                        photoBase64 = null;
-                        locationStatusTextView.setText("Ubicación no obtenida");
-                        photoStatusTextView.setText("Sin imagen");
-                        imagePreview.setVisibility(View.GONE);
-                        clearPhotoButton.setVisibility(View.GONE);
+                        // Mostrar la barra de estado
                         findViewById(R.id.reportStatusBar).setVisibility(View.VISIBLE);
-                        new android.os.Handler().postDelayed(() -> findViewById(R.id.reportStatusBar).setVisibility(View.GONE), 3000);
+                        // Opcional: Ocultar la barra después de 3 segundos
+                        new android.os.Handler().postDelayed(() -> {
+                            findViewById(R.id.reportStatusBar).setVisibility(View.GONE);
+                        }, 3000); // 3000 ms = 3 segundos
                     } else {
-                        sendStatusTextView.setText("Error al enviar: Código " + response.code() + " - " + response.message() + " - " + responseBody);
+                        sendStatusTextView.setText("Error al enviar el reporte: Código " + response.code() + " - " + response.message());
                     }
                 });
             }
