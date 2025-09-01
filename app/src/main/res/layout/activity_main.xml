@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    android:paddingTop="32dp"
+    android:padding="16dp">
+
+    <!-- Estado del Reporte -->
+    <LinearLayout
+        android:id="@+id/reportStatusBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="#4CAF50"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/photoCard"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_info_details"
+            android:contentDescription="Estado del Reporte"
+            android:tint="#FFFFFF" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Reporte enviado exitosamente al servidor!"
+            android:textSize="16sp"
+            android:textColor="#FFFFFF"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp" />
+    </LinearLayout>
+
+    <!-- Sección de Subida de Imagen -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/photoCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/reportStatusBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/locationCard"
+        android:layout_marginBottom="16dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp">
+
+            <LinearLayout
+                android:id="@+id/buttonLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/takePhotoButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Foto"
+                    android:textColor="#212121"
+                    android:backgroundTint="#FFFFFF"
+                    app:cornerRadius="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:icon="@android:drawable/ic_menu_camera"
+                    app:iconTint="#0288D1"
+                    app:iconGravity="textStart"
+                    app:iconPadding="4dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/pickFromGalleryButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Galería"
+                    android:textColor="#212121"
+                    android:backgroundTint="#FFFFFF"
+                    app:cornerRadius="8dp"
+                    app:icon="@android:drawable/ic_menu_gallery"
+                    app:iconTint="#388E3C"
+                    app:iconGravity="textStart"
+                    app:iconPadding="4dp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imagePreview"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:contentDescription="Vista Previa de la Imagen"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/buttonLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="8dp"
+                android:maxHeight="200dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/clearPhotoButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Limpiar"
+                android:textColor="#212121"
+                android:backgroundTint="#FFFFFF"
+                app:cornerRadius="8dp"
+                android:layout_marginTop="8dp"
+                app:icon="@android:drawable/ic_menu_close_clear_cancel"
+                app:iconTint="#D32F2F"
+                app:iconGravity="textStart"
+                app:iconPadding="4dp"
+                app:layout_constraintTop_toBottomOf="@id/imagePreview"
+                app:layout_constraintStart_toStartOf="@id/imagePreview"
+                app:layout_constraintEnd_toEndOf="@id/imagePreview"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/photoStatusTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Sin imagen"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/clearPhotoButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="4dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Sección de Ubicación Actual -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/locationCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/photoCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/sendCard"
+        android:layout_marginBottom="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/locationStatusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="16sp"
+                android:textColor="#212121"
+                android:fontFamily="sans-serif-medium" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/updateLocationButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Actualizar Ubicación"
+                android:textColor="#212121"
+                android:backgroundTint="#FFFFFF"
+                app:cornerRadius="8dp"
+                android:layout_marginTop="8dp"
+                app:icon="@android:drawable/ic_menu_mylocation"
+                app:iconTint="#F57C00"
+                app:iconGravity="textStart"
+                app:iconPadding="4dp"
+                android:layout_gravity="center" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Sección de Conexión y Envío -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sendCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="2dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:layout_constraintTop_toBottomOf="@id/locationCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:id="@+id/sendStatusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Esperando envío..."
+                android:textSize="16sp"
+                android:textColor="#757575"
+                android:fontFamily="sans-serif"
+                android:gravity="center"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/serverStatusTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Verificando conexión..."
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:fontFamily="sans-serif"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/sendButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enviar Reporte"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#512DA8"
+                app:cornerRadius="8dp"
+                app:icon="@android:drawable/ic_menu_send"
+                app:iconTint="#FFFFFF"
+                app:iconGravity="textStart"
+                app:iconPadding="4dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
