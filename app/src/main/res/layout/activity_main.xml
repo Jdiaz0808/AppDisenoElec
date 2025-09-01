@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/photoCard"
+        app:layout_constraintBottom_toTopOf="@id/appNameText"
         android:layout_marginBottom="16dp">
 
         <ImageView
@@ -27,7 +27,7 @@
             android:layout_height="24dp"
             android:src="@android:drawable/ic_menu_info_details"
             android:contentDescription="Estado del Reporte"
-            app:tint="#FFFFFF" />
+            android:tint="#FFFFFF" />
 
         <TextView
             android:layout_width="0dp"
@@ -41,6 +41,21 @@
             android:paddingStart="8dp" />
     </LinearLayout>
 
+    <!-- Nombre de la App -->
+    <TextView
+        android:id="@+id/appNameText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/app_name"
+        android:textSize="24sp"
+        android:textColor="#212121"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/reportStatusBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
     <!-- Sección de Subida de Imagen -->
     <androidx.cardview.widget.CardView
         android:id="@+id/photoCard"
@@ -49,10 +64,11 @@
         app:cardCornerRadius="12dp"
         app:cardElevation="2dp"
         app:cardBackgroundColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/reportStatusBar"
+        app:layout_constraintTop_toBottomOf="@id/appNameText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/locationCard"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="16dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,7 +119,7 @@
             <ImageView
                 android:id="@+id/imagePreview"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:contentDescription="Vista Previa de la Imagen"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
