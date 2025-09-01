@@ -27,7 +27,7 @@
             android:layout_height="24dp"
             android:src="@android:drawable/ic_menu_info_details"
             android:contentDescription="Estado del Reporte"
-            android:tint="#FFFFFF" />
+            app:tint="#FFFFFF" />
 
         <TextView
             android:layout_width="0dp"
