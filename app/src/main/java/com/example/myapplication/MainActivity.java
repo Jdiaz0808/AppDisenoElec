@@ -181,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkServerConnection() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url(apiUrl)
+                .url("http://191.110.32.119:5000/") // Changed from apiUrl to root endpoint
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -194,9 +194,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 runOnUiThread(() -> {
                     if (response.isSuccessful()) {
-                        serverStatusTextView.setText("Conectado a: " + apiUrl);
+                        serverStatusTextView.setText("Conectado a: http://191.110.32.119:5000");
                     } else {
-                        serverStatusTextView.setText("No conectado al servidor");
+                        serverStatusTextView.setText("No conectado al servidor: Código " + response.code());
                     }
                 });
             }
@@ -343,10 +343,8 @@ public class MainActivity extends AppCompatActivity {
                     if (response.isSuccessful()) {
                         sendStatusTextView.setText("Reporte enviado exitosamente");
                         // Mostrar la barra de estado
-                        findViewById(R.id.reportStatusBar).setVisibility(View.VISIBLE);
                         // Opcional: Ocultar la barra después de 3 segundos
                         new android.os.Handler().postDelayed(() -> {
-                            findViewById(R.id.reportStatusBar).setVisibility(View.GONE);
                         }, 3000); // 3000 ms = 3 segundos
                     } else {
                         sendStatusTextView.setText("Error al enviar el reporte: Código " + response.code() + " - " + response.message());
