@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
         setContentView(R.layout.activity_main);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
