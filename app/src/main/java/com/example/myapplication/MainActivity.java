@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private Button clearPhotoButton;
     private Location currentLocation;
     private String photoBase64 = null;
-    private final String apiUrl = "http://186.98.29.101:5000/reports/";
+    private final String apiUrl = "http://18.233.249.90:5000/reports/";
 
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
