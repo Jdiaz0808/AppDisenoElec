@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -220,6 +221,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
         fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, new CancellationTokenSource().getToken())
                 .addOnSuccessListener(location -> {
                     if (location != null) {
@@ -339,17 +343,21 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                final String responseBody = response.body() != null ? response.body().string() : "";
                 runOnUiThread(() -> {
                     if (response.isSuccessful()) {
                         sendStatusTextView.setText("Reporte enviado exitosamente");
-                        // Mostrar la barra de estado
+                        // Opcional: Resetea campos después de envío
+                        currentLocation = null;
+                        photoBase64 = null;
+                        locationStatusTextView.setText("Ubicación no obtenida");
+                        photoStatusTextView.setText("Sin imagen");
+                        imagePreview.setVisibility(View.GONE);
+                        clearPhotoButton.setVisibility(View.GONE);
                         findViewById(R.id.reportStatusBar).setVisibility(View.VISIBLE);
-                        // Opcional: Ocultar la barra después de 3 segundos
-                        new android.os.Handler().postDelayed(() -> {
-                            findViewById(R.id.reportStatusBar).setVisibility(View.GONE);
-                        }, 3000); // 3000 ms = 3 segundos
+                        new android.os.Handler().postDelayed(() -> findViewById(R.id.reportStatusBar).setVisibility(View.GONE), 3000);
                     } else {
-                        sendStatusTextView.setText("Error al enviar el reporte: Código " + response.code() + " - " + response.message());
+                        sendStatusTextView.setText("Error al enviar: Código " + response.code() + " - " + response.message() + " - " + responseBody);
                     }
                 });
             }

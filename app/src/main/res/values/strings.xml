@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Gps_Report</string>
+    <string name="app_name">Palenque Pinpoint</string>
+    <string name="title_activity_splash">SplashActivity</string>
 </resources>
