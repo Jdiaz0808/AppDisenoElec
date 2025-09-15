@@ -34,11 +34,14 @@
             </intent-filter>
         </activity>
 
-        <!-- Actividad principal -->
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false">
+        </activity>
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-            <!-- No necesita intent-filter aquí -->
+            android:exported="false">
         </activity>
 
     </application>
