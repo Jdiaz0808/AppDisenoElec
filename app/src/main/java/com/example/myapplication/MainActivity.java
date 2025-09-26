@@ -3,6 +3,7 @@ package com.example.myapplication;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,6 +11,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     private Button clearPhotoButton;
     private Location currentLocation;
     private String photoBase64 = null;
-    private final String apiUrl = "http://186.98.29.101:5000/reports/";
+    private final String apiUrl = "http://18.233.249.90:5000/reports/";
 
     private ActivityResultLauncher<Intent> cameraLauncher;
     private ActivityResultLauncher<String> galleryLauncher;
@@ -64,12 +66,16 @@ public class MainActivity extends AppCompatActivity {
     private ActivityResultLauncher<String> cameraPermissionLauncher;
     private ActivityResultLauncher<String> galleryPermissionLauncher;
 
+    private SharedPreferences sharedPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         setContentView(R.layout.activity_main);
 
@@ -182,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
     private void checkServerConnection() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://191.110.32.119:5000/") // Changed from apiUrl to root endpoint
+                .url("http://18.233.249.90:5000/") // Changed from apiUrl to root endpoint
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -311,6 +317,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        String token = sharedPreferences.getString("jwt_token", null);
+        if (token == null) {
+            sendStatusTextView.setText("Inicia sesión primero");
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+            return;
+        }
+
         String timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()).format(new Date());
 
         JSONObject json = new JSONObject();
@@ -330,12 +344,13 @@ public class MainActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(apiUrl)
                 .post(body)
+                .addHeader("Authorization", "Bearer " + token)  // Agrega el token
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                runOnUiThread(() -> sendStatusTextView.setText("No se pudo conectar al servidor, verifica tu internet y vuelve a intentarlo"));
+                runOnUiThread(() -> sendStatusTextView.setText("No se pudo conectar al servidor: " + e.getMessage()));
             }
 
             @Override
@@ -343,12 +358,8 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     if (response.isSuccessful()) {
                         sendStatusTextView.setText("Reporte enviado exitosamente");
-                        // Mostrar la barra de estado
-                        // Opcional: Ocultar la barra después de 3 segundos
-                        new android.os.Handler().postDelayed(() -> {
-                        }, 3000); // 3000 ms = 3 segundos
                     } else {
-                        sendStatusTextView.setText("Error al enviar el reporte: Código " + response.code() + " - " + response.message());
+                        sendStatusTextView.setText("Error al enviar: Código " + response.code() + " - " + response.message());
                     }
                 });
             }

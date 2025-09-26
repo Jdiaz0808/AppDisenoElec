@@ -1,7 +1,352 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tema sin Action Bar -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:background">#F5F5F5</item> <!-- Fondo claro -->
+
+    <!-- Base application theme -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- Background colors -->
+        <item name="android:windowBackground">@drawable/gradient_background</item>
+        <item name="colorSurface">@color/glass_card_background</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
+        <item name="android:windowLightStatusBar">false</item>
+
+        <!-- Navigation bar -->
+        <item name="android:navigationBarColor">@color/colorPrimaryVariant</item>
+
+        <!-- Remove action bar for custom design -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
+
+    <!-- Splash screen theme -->
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+        <item name="android:statusBarColor">@color/colorPrimaryVariant</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryVariant</item>
+    </style>
+
+    <!-- Modern Glass Button Style -->
+    <style name="ModernGlassButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/glass_button_background</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="rippleColor">@color/button_ripple</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <!-- App Title Style -->
+    <style name="AppTitleStyle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- Section Header Style -->
+    <style name="SectionHeaderStyle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Status Text Style -->
+    <style name="StatusTextStyle" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/status_text_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- Subtitle Style -->
+    <style name="SubtitleStyle" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/subtitle_color</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:alpha">0.8</item>
+    </style>
+
+    <!-- Modern Card Style -->
+    <style name="ModernCardStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">15dp</item>
+        <item name="cardElevation">6dp</item>
+        <item name="cardBackgroundColor">@color/glass_card_background</item>
+        <item name="contentPadding">20dp</item>
+    </style>
+
+    <!-- Input Field Style -->
+    <style name="ModernInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="boxStrokeColor">@color/input_stroke_color</item>
+        <item name="boxBackgroundColor">@color/input_background</item>
+        <item name="hintTextColor">@color/text_hint</item>
+        <item name="android:textColorHint">@color/text_hint</item>
+    </style>
+
+    <!-- Gradient Button Style -->
+    <style name="GradientButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:background">@drawable/gradient_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:elevation">8dp</item>
+        <item name="rippleColor">@color/button_ripple</item>
+        <item name="backgroundTint">@null</item>
+    </style>
+
+    <!-- FAB Style -->
+    <style name="ModernFabStyle" parent="Widget.MaterialComponents.ExtendedFloatingActionButton">
+        <item name="backgroundTint">@color/fab_background</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="elevation">8dp</item>
+        <item name="pressedTranslationZ">12dp</item>
+    </style>
+
+    <!-- Checkbox Style -->
+    <style name="ModernCheckboxStyle" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/checkbox_tint</item>
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Loading Progress Style -->
+    <style name="LoadingProgressStyle" parent="Widget.MaterialComponents.CircularProgressIndicator">
+        <item name="indicatorColor">@color/progress_color</item>
+        <item name="trackColor">@color/progress_track</item>
+        <item name="indicatorSize">48dp</item>
+        <item name="trackThickness">4dp</item>
+    </style>
+
+    <!-- Link Text Style -->
+    <style name="LinkTextStyle" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="android:textColor">@color/link_color</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Live Indicator Style -->
+    <style name="LiveIndicatorStyle">
+        <item name="android:background">@color/live_indicator_bg</item>
+        <item name="android:textColor">@color/live_indicator_text</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <!-- Clear Button Style -->
+    <style name="ClearButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/clear_button_bg</item>
+        <item name="android:textColor">@color/clear_button_text</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="cornerRadius">18dp</item>
+        <item name="android:elevation">2dp</item>
+        <item name="iconTint">@color/clear_button_text</item>
+    </style>
+
+    <!-- Material Theme Overlay for Dark -->
+    <style name="ThemeOverlay.App.Dark" parent="ThemeOverlay.MaterialComponents.Dark">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSurface">@color/glass_card_background</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+
+    <!-- Toolbar Style -->
+    <style name="ModernToolbarStyle" parent="Widget.MaterialComponents.Toolbar">
+        <item name="android:background">@drawable/header_glass_background</item>
+        <item name="titleTextColor">@android:color/white</item>
+        <item name="android:elevation">0dp</item>
+    </style>
+
+    <!-- Animation Styles -->
+    <style name="SlideUpAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_up_enter</item>
+        <item name="android:windowExitAnimation">@anim/slide_down_exit</item>
+    </style>
+
+    <style name="FadeAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
+    <!-- Bottom Sheet Style -->
+    <style name="ModernBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/card_background_elevated</item>
+    </style>
+
+    <!-- Snackbar Style -->
+    <style name="ModernSnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/glass_card_background</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <!-- Progress Bar Style -->
+    <style name="ModernProgressBarStyle" parent="Widget.MaterialComponents.LinearProgressIndicator">
+        <item name="indicatorColor">@color/progress_color</item>
+        <item name="trackColor">@color/progress_track</item>
+        <item name="trackThickness">4dp</item>
+    </style>
+
+    <!-- Switch Style -->
+    <style name="ModernSwitchStyle" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="colorControlActivated">@color/colorSecondary</item>
+        <item name="colorSwitchThumbNormal">@color/text_secondary</item>
+        <item name="android:colorForeground">@color/text_primary</item>
+    </style>
+
+    <!-- Chip Style -->
+    <style name="ModernChipStyle" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/glass_card_background</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="chipStrokeColor">@color/input_stroke_color</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">20dp</item>
+    </style>
+
+    <!-- Tab Layout Style -->
+    <style name="ModernTabLayoutStyle" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabBackground">@color/transparent</item>
+        <item name="tabTextColor">@color/text_secondary</item>
+        <item name="tabSelectedTextColor">@color/text_primary</item>
+        <item name="tabIndicatorColor">@color/colorSecondary</item>
+        <item name="tabIndicatorHeight">3dp</item>
+    </style>
+
+    <!-- Alert Dialog Style -->
+    <style name="ModernAlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="buttonBarNegativeButtonStyle">@style/ModernDialogButtonNegative</item>
+        <item name="buttonBarPositiveButtonStyle">@style/ModernDialogButtonPositive</item>
+        <item name="android:background">@drawable/card_background_elevated</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+
+    <style name="ModernDialogButtonNegative" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="ModernDialogButtonPositive" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/colorSecondary</item>
+    </style>
+
+    <!-- Navigation Drawer Style -->
+    <style name="ModernNavigationViewStyle" parent="Widget.MaterialComponents.NavigationView">
+        <item name="android:background">@color/glass_card_background</item>
+        <item name="itemTextColor">@color/text_primary</item>
+        <item name="itemIconTint">@color/icon_tint</item>
+        <item name="itemShapeAppearance">@style/ShapeAppearance.MaterialComponents.MediumComponent</item>
+    </style>
+
+    <!-- Image View Style for previews -->
+    <style name="ModernImageViewStyle">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:background">@drawable/card_background_elevated</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+
+    <!-- Section Divider Style -->
+    <style name="ModernDividerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/divider_color</item>
+        <item name="android:layout_marginVertical">16dp</item>
+    </style>
+
+    <!-- Status Badge Styles -->
+    <style name="StatusBadgeSuccess">
+        <item name="android:background">@drawable/badge_success_background</item>
+        <item name="android:textColor">@color/success</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="StatusBadgeWarning">
+        <item name="android:background">@drawable/badge_warning_background</item>
+        <item name="android:textColor">@color/warning</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <style name="StatusBadgeError">
+        <item name="android:background">@drawable/badge_error_background</item>
+        <item name="android:textColor">@color/error</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">6dp</item>
+        <item name="android:layout_margin">4dp</item>
+    </style>
+
+    <!-- Text Styles adicionales -->
+    <style name="CaptionTextStyle" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:alpha">0.7</item>
+    </style>
+
+    <style name="OverlineTextStyle" parent="TextAppearance.MaterialComponents.Overline">
+        <item name="android:textColor">@color/text_secondary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:letterSpacing">0.1</item>
+    </style>
+
+    <style name="HeadlineTextStyle" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+
+    <!-- Overlay Styles -->
+    <style name="LoadingOverlayStyle">
+        <item name="android:background">#80000000</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <!-- Shape Appearances -->
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <!-- Custom Theme Overlays -->
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="colorSurface">@color/glass_card_background</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/colorSecondary</item>
+        <item name="colorSurface">@color/glass_card_background</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+    </style>
+
 </resources>
