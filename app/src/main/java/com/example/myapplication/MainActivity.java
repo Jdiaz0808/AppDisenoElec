@@ -23,6 +23,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView sendStatusTextView;
     private TextView serverStatusTextView;
     private ImageView imagePreview;
+    private CardView imagePreviewCard; // Agregamos referencia al CardView contenedor
     private Button clearPhotoButton;
     private Location currentLocation;
     private String photoBase64 = null;
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         sendStatusTextView = findViewById(R.id.sendStatusTextView);
         serverStatusTextView = findViewById(R.id.serverStatusTextView);
         imagePreview = findViewById(R.id.imagePreview);
+        imagePreviewCard = findViewById(R.id.imagePreviewCard); // Inicializar el CardView
         clearPhotoButton = findViewById(R.id.clearPhotoButton);
         locationStatusTextView.setVisibility(View.GONE);
 
@@ -114,8 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         if (imageBitmap != null) {
                             photoBase64 = bitmapToBase64(imageBitmap);
                             imagePreview.setImageBitmap(imageBitmap);
-                            imagePreview.setVisibility(View.VISIBLE);
-                            clearPhotoButton.setVisibility(View.VISIBLE);
+                            showImagePreview(); // Función para mostrar la previsualización
                             photoStatusTextView.setText("Imagen cargada");
                         }
                     }
@@ -130,17 +132,19 @@ public class MainActivity extends AppCompatActivity {
                         photoBase64 = uriToBase64(uri);
                         if (photoBase64 != null) {
                             Bitmap bitmap = uriToBitmap(uri);
-                            imagePreview.setImageBitmap(bitmap);
-                            imagePreview.setVisibility(View.VISIBLE);
-                            clearPhotoButton.setVisibility(View.VISIBLE);
-                            photoStatusTextView.setText("Imagen cargada");
+                            if (bitmap != null) {
+                                imagePreview.setImageBitmap(bitmap);
+                                showImagePreview(); // Función para mostrar la previsualización
+                                photoStatusTextView.setText("Imagen cargada");
+                            } else {
+                                photoStatusTextView.setText("Error al procesar la imagen");
+                            }
                         } else {
                             photoStatusTextView.setText("Error al seleccionar la foto");
                         }
                     } else {
                         photoStatusTextView.setText("Sin imagen");
-                        imagePreview.setVisibility(View.GONE);
-                        clearPhotoButton.setVisibility(View.GONE);
+                        hideImagePreview(); // Función para ocultar la previsualización
                     }
                 }
         );
@@ -183,6 +187,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+    }
+
+    // Función para mostrar la previsualización de imagen
+    private void showImagePreview() {
+        imagePreviewCard.setVisibility(View.VISIBLE); // Mostrar el CardView contenedor
+        imagePreview.setVisibility(View.VISIBLE); // Mostrar el ImageView
+        clearPhotoButton.setVisibility(View.VISIBLE); // Mostrar el botón de limpiar
+    }
+
+    // Función para ocultar la previsualización de imagen
+    private void hideImagePreview() {
+        imagePreviewCard.setVisibility(View.GONE); // Ocultar el CardView contenedor
+        imagePreview.setVisibility(View.GONE); // Ocultar el ImageView
+        clearPhotoButton.setVisibility(View.GONE); // Ocultar el botón de limpiar
     }
 
     private void checkServerConnection() {
@@ -274,8 +292,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearPhoto() {
         photoBase64 = null;
-        imagePreview.setVisibility(View.GONE); // Ocultar el ImageView
-        clearPhotoButton.setVisibility(View.GONE);
+        hideImagePreview(); // Usar la función para ocultar la previsualización
         photoStatusTextView.setText("Sin imagen");
     }
 
@@ -289,8 +306,12 @@ public class MainActivity extends AppCompatActivity {
     private String uriToBase64(Uri uri) {
         try {
             InputStream inputStream = getContentResolver().openInputStream(uri);
+            if (inputStream == null) return null;
+
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-            if (inputStream != null) inputStream.close();
+            inputStream.close();
+
+            if (bitmap == null) return null;
             return bitmapToBase64(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
@@ -300,7 +321,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Bitmap uriToBitmap(Uri uri) {
         try {
-            return BitmapFactory.decodeStream(getContentResolver().openInputStream(uri));
+            InputStream inputStream = getContentResolver().openInputStream(uri);
+            if (inputStream == null) return null;
+
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            inputStream.close();
+            return bitmap;
         } catch (IOException e) {
             e.printStackTrace();
             return null;

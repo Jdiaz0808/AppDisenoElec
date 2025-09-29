@@ -149,41 +149,31 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Remember me and forgot password -->
-            <LinearLayout
+            <!-- Remember me checkbox -->
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/rememberCheckbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recordarme"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:layout_marginBottom="12dp"
+                app:buttonTint="@color/checkbox_tint" />
+
+            <!-- Forgot password link -->
+            <TextView
+                android:id="@+id/forgotPasswordText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:layout_marginBottom="24dp">
-
-                <com.google.android.material.checkbox.MaterialCheckBox
-                    android:id="@+id/rememberCheckbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Recordarme"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp"
-                    app:buttonTint="@color/checkbox_tint" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <TextView
-                    android:id="@+id/forgotPasswordText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¿Olvidaste tu contraseña?"
-                    android:textColor="@color/link_color"
-                    android:textSize="14sp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="8dp" />
-
-            </LinearLayout>
+                android:text="¿Olvidaste tu contraseña?"
+                android:textColor="@color/link_color"
+                android:textSize="14sp"
+                android:gravity="start"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:layout_marginBottom="16dp" />
 
             <!-- Login button -->
             <com.google.android.material.button.MaterialButton
@@ -213,14 +203,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:paddingVertical="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¿No tienes cuenta? "
                     android:textColor="@color/text_secondary"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
 
                 <TextView
                     android:id="@+id/registerLink"
@@ -228,12 +219,13 @@
                     android:layout_height="wrap_content"
                     android:text="Regístrate aquí"
                     android:textColor="@color/link_color"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:clickable="true"
                     android:focusable="true"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:padding="8dp" />
+                    android:paddingHorizontal="4dp"
+                    android:paddingVertical="4dp" />
 
             </LinearLayout>
 
