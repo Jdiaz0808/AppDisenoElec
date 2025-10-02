@@ -118,6 +118,127 @@
 
             </androidx.cardview.widget.CardView>
 
+            <!-- Report Information Section -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="15dp"
+                app:cardElevation="6dp"
+                app:cardBackgroundColor="@color/glass_card_background">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Section Title -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:layout_marginBottom="16dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="📋"
+                            android:textSize="20sp"
+                            android:layout_marginEnd="8dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Información del Reporte"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/white" />
+
+                    </LinearLayout>
+
+                    <!-- City Input -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:hint="Ciudad *"
+                        app:boxBackgroundMode="outline"
+                        app:boxBackgroundColor="#20FFFFFF"
+                        app:boxStrokeColor="@android:color/white"
+                        app:hintTextColor="@android:color/white">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/cityEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:inputType="textCapWords" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <!-- Incident Type Spinner -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo de Incidente *"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="4dp"
+                        android:alpha="0.8" />
+
+                    <Spinner
+                        android:id="@+id/incidentTypeSpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/spinner_background"
+                        android:padding="12dp" />
+
+                    <!-- Severity Spinner -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Severidad *"
+                        android:textSize="12sp"
+                        android:textColor="@android:color/white"
+                        android:layout_marginBottom="4dp"
+                        android:alpha="0.8" />
+
+                    <Spinner
+                        android:id="@+id/severitySpinner"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@drawable/spinner_background"
+                        android:padding="12dp" />
+
+                    <!-- Description Input -->
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Descripción (opcional)"
+                        app:boxBackgroundMode="outline"
+                        app:boxBackgroundColor="#20FFFFFF"
+                        app:boxStrokeColor="@android:color/white"
+                        app:hintTextColor="@android:color/white">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/descriptionEditText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/white"
+                            android:inputType="textMultiLine"
+                            android:lines="3"
+                            android:gravity="top|start" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
             <!-- Photo Capture Section -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/photoCard"
@@ -414,7 +535,6 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
     <!-- Loading overlay -->
     <FrameLayout

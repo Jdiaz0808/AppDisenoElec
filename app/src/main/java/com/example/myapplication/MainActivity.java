@@ -15,8 +15,11 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,8 +59,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView sendStatusTextView;
     private TextView serverStatusTextView;
     private ImageView imagePreview;
-    private CardView imagePreviewCard; // Agregamos referencia al CardView contenedor
+    private CardView imagePreviewCard;
     private Button clearPhotoButton;
+
+    // Nuevos campos para información del reporte
+    private EditText cityEditText;
+    private Spinner incidentTypeSpinner;
+    private Spinner severitySpinner;
+    private EditText descriptionEditText;
+
     private Location currentLocation;
     private String photoBase64 = null;
     private final String apiUrl = "http://18.233.249.90:5000/reports/";
@@ -82,18 +92,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        // Referencias a vistas existentes
         locationStatusTextView = findViewById(R.id.locationStatusTextView);
         photoStatusTextView = findViewById(R.id.photoStatusTextView);
         sendStatusTextView = findViewById(R.id.sendStatusTextView);
         serverStatusTextView = findViewById(R.id.serverStatusTextView);
         imagePreview = findViewById(R.id.imagePreview);
-        imagePreviewCard = findViewById(R.id.imagePreviewCard); // Inicializar el CardView
+        imagePreviewCard = findViewById(R.id.imagePreviewCard);
         clearPhotoButton = findViewById(R.id.clearPhotoButton);
+
+        // Referencias a nuevos campos
+        cityEditText = findViewById(R.id.cityEditText);
+        incidentTypeSpinner = findViewById(R.id.incidentTypeSpinner);
+        severitySpinner = findViewById(R.id.severitySpinner);
+        descriptionEditText = findViewById(R.id.descriptionEditText);
+
         locationStatusTextView.setVisibility(View.GONE);
+
+        // Configurar Spinners
+        setupSpinners();
 
         Button takePhotoButton = findViewById(R.id.takePhotoButton);
         Button pickFromGalleryButton = findViewById(R.id.pickFromGalleryButton);
-        Button clearPhotoButton = findViewById(R.id.clearPhotoButton);
         Button updateLocationButton = findViewById(R.id.updateLocationButton);
         Button sendButton = findViewById(R.id.sendButton);
 
@@ -104,10 +125,34 @@ public class MainActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> sendReport());
 
         serverStatusTextView.setText("Verificando conexión...");
-
         checkServerConnection();
 
-        // Inicializa el launcher para la cámara
+        // Inicializa launchers
+        initializeLaunchers();
+    }
+
+    private void setupSpinners() {
+        // Spinner para tipo de incidente
+        ArrayAdapter<CharSequence> incidentAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.incident_types,
+                android.R.layout.simple_spinner_item
+        );
+        incidentAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        incidentTypeSpinner.setAdapter(incidentAdapter);
+
+        // Spinner para severidad
+        ArrayAdapter<CharSequence> severityAdapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.severity_levels,
+                android.R.layout.simple_spinner_item
+        );
+        severityAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        severitySpinner.setAdapter(severityAdapter);
+    }
+
+    private void initializeLaunchers() {
+        // Camera launcher
         cameraLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
@@ -117,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                         if (imageBitmap != null) {
                             photoBase64 = bitmapToBase64(imageBitmap);
                             imagePreview.setImageBitmap(imageBitmap);
-                            showImagePreview(); // Función para mostrar la previsualización
+                            showImagePreview();
                             photoStatusTextView.setText("Imagen cargada");
                         }
                     }
@@ -134,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                             Bitmap bitmap = uriToBitmap(uri);
                             if (bitmap != null) {
                                 imagePreview.setImageBitmap(bitmap);
-                                showImagePreview(); // Función para mostrar la previsualización
+                                showImagePreview();
                                 photoStatusTextView.setText("Imagen cargada");
                             } else {
                                 photoStatusTextView.setText("Error al procesar la imagen");
@@ -144,7 +189,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     } else {
                         photoStatusTextView.setText("Sin imagen");
-                        hideImagePreview(); // Función para ocultar la previsualización
+                        hideImagePreview();
                     }
                 }
         );
@@ -189,24 +234,22 @@ public class MainActivity extends AppCompatActivity {
         );
     }
 
-    // Función para mostrar la previsualización de imagen
     private void showImagePreview() {
-        imagePreviewCard.setVisibility(View.VISIBLE); // Mostrar el CardView contenedor
-        imagePreview.setVisibility(View.VISIBLE); // Mostrar el ImageView
-        clearPhotoButton.setVisibility(View.VISIBLE); // Mostrar el botón de limpiar
+        imagePreviewCard.setVisibility(View.VISIBLE);
+        imagePreview.setVisibility(View.VISIBLE);
+        clearPhotoButton.setVisibility(View.VISIBLE);
     }
 
-    // Función para ocultar la previsualización de imagen
     private void hideImagePreview() {
-        imagePreviewCard.setVisibility(View.GONE); // Ocultar el CardView contenedor
-        imagePreview.setVisibility(View.GONE); // Ocultar el ImageView
-        clearPhotoButton.setVisibility(View.GONE); // Ocultar el botón de limpiar
+        imagePreviewCard.setVisibility(View.GONE);
+        imagePreview.setVisibility(View.GONE);
+        clearPhotoButton.setVisibility(View.GONE);
     }
 
     private void checkServerConnection() {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://18.233.249.90:5000/") // Changed from apiUrl to root endpoint
+                .url("http://18.233.249.90:5000/")
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -219,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call call, Response response) throws IOException {
                 runOnUiThread(() -> {
                     if (response.isSuccessful()) {
-                        serverStatusTextView.setText("Conectado a: http://191.110.32.119:5000");
+                        serverStatusTextView.setText("Conectado al servidor");
                     } else {
                         serverStatusTextView.setText("No conectado al servidor: Código " + response.code());
                     }
@@ -292,7 +335,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void clearPhoto() {
         photoBase64 = null;
-        hideImagePreview(); // Usar la función para ocultar la previsualización
+        hideImagePreview();
         photoStatusTextView.setText("Sin imagen");
     }
 
@@ -351,6 +394,19 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
+        // Obtener valores de los nuevos campos
+        String city = cityEditText.getText().toString().trim();
+        String incidentType = incidentTypeSpinner.getSelectedItem().toString();
+        String severity = severitySpinner.getSelectedItem().toString();
+        String description = descriptionEditText.getText().toString().trim();
+
+        // Validar campos requeridos
+        if (city.isEmpty()) {
+            sendStatusTextView.setText("Por favor ingresa la ciudad");
+            cityEditText.requestFocus();
+            return;
+        }
+
         String timestamp = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault()).format(new Date());
 
         JSONObject json = new JSONObject();
@@ -359,10 +415,17 @@ public class MainActivity extends AppCompatActivity {
             json.put("longitude", currentLocation.getLongitude());
             json.put("timestamp", timestamp);
             json.put("photo_base64", photoBase64);
+            json.put("city", city);
+            json.put("incident_type", incidentType);
+            json.put("severity", severity);
+            json.put("status", "Pendiente");
+            json.put("description", description.isEmpty() ? "Sin descripción" : description);
         } catch (Exception e) {
             sendStatusTextView.setText("Error al crear JSON: " + e.getMessage());
             return;
         }
+
+        sendStatusTextView.setText("Enviando...");
 
         OkHttpClient client = new OkHttpClient();
         MediaType mediaType = MediaType.parse("application/json");
@@ -370,7 +433,7 @@ public class MainActivity extends AppCompatActivity {
         Request request = new Request.Builder()
                 .url(apiUrl)
                 .post(body)
-                .addHeader("Authorization", "Bearer " + token)  // Agrega el token
+                .addHeader("Authorization", "Bearer " + token)
                 .build();
 
         client.newCall(request).enqueue(new Callback() {
@@ -384,11 +447,31 @@ public class MainActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     if (response.isSuccessful()) {
                         sendStatusTextView.setText("Reporte enviado exitosamente");
+                        Toast.makeText(MainActivity.this, "¡Reporte enviado!", Toast.LENGTH_LONG).show();
+
+                        // Limpiar formulario después de envío exitoso
+                        clearForm();
                     } else {
                         sendStatusTextView.setText("Error al enviar: Código " + response.code() + " - " + response.message());
                     }
                 });
             }
         });
+    }
+
+    private void clearForm() {
+        // Limpiar foto
+        clearPhoto();
+
+        // Limpiar campos de texto
+        cityEditText.setText("");
+        descriptionEditText.setText("");
+
+        // Reset spinners a primera opción
+        incidentTypeSpinner.setSelection(0);
+        severitySpinner.setSelection(0);
+
+        // Mantener la ubicación para facilitar envíos múltiples
+        Toast.makeText(this, "Formulario limpiado. La ubicación se mantiene.", Toast.LENGTH_SHORT).show();
     }
 }

@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
     private TextView registerLink;
+    private TextView forgotPasswordLink;
     private final String apiUrl = "http://18.233.249.90:5000/token";  // Ajusta la IP si es necesario
     private SharedPreferences sharedPreferences;
 
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         loginButton = findViewById(R.id.loginButton);
         registerLink = findViewById(R.id.registerLink);  // Agrega este ID en activity_login.xml
+        forgotPasswordLink = findViewById(R.id.forgotPasswordLink);  // Initialize the forgot password link
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -54,7 +57,13 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             finish();
         });
+
+        forgotPasswordLink.setOnClickListener(v -> {
+            startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
+            // Do not finish() to allow the user to return to the login screen
+        });
     }
+
 
     private void loginUser() {
         String username = usernameEditText.getText().toString().trim();

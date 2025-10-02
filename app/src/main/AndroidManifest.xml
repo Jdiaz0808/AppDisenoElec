@@ -18,7 +18,7 @@
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Gps_Report"
+        android:label="Palenque Pinpoint"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
@@ -37,6 +37,15 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
+        <!-- Forgot Password Activity -->
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false"
+            android:parentActivityName=".LoginActivity" />
 
         <!-- MainActivity -->
         <activity

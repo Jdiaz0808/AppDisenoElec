@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tipos de incidentes -->
+    <string-array name="incident_types">
+        <item>Accidente de tránsito</item>
+        <item>Bache en la vía</item>
+        <item>Inundación</item>
+        <item>Árbol caído</item>
+        <item>Semáforo dañado</item>
+        <item>Iluminación defectuosa</item>
+        <item>Basura acumulada</item>
+        <item>Vandalismo</item>
+        <item>Fuga de agua</item>
+        <item>Obstrucción de vía</item>
+        <item>Otro</item>
+    </string-array>
+
+    <!-- Niveles de severidad -->
+    <string-array name="severity_levels">
+        <item>Baja</item>
+        <item>Media</item>
+        <item>Alta</item>
+        <item>Crítica</item>
+    </string-array>
+</resources>
