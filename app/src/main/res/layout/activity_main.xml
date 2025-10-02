@@ -20,7 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@drawable/header_glass_background"
             app:titleTextColor="@android:color/white"
-            app:title="Palenque Pinpoint"
+            app:title="Dunord Eye"
             app:titleTextAppearance="@style/AppTitleStyle"
             android:layout_margin="16dp"
             app:layout_scrollFlags="scroll|enterAlways|snap" />
